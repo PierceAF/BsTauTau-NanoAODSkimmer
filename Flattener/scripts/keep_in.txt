@@ -49,5 +49,5 @@ keep Electron*
 keep Jet*
 keep PV_*
 keep TrigObj*
-keep BsTau3p*
+keep BsTau*
 keep L1PreFiringWeight*

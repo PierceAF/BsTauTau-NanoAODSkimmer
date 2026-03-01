@@ -52,6 +52,6 @@ keep nbj
 
 keep puWeight*
 
-keep BsTau3p*
+keep BsTau*
 
 keep L1PreFiringWeight*

@@ -65,6 +65,9 @@ def buildCondorFile(opt,FarmDirectory):
             sys.exit(1)
 
           channels=['mu'] #FIXME
+          year='2018'
+          sufix='mc'
+
           yearmodified=year
           if "preVFP" in dataset and year=="2016" and (sufix=="mc" or sufix=="sig"):
              yearmodified="2016pre"
@@ -119,14 +122,12 @@ def buildCondorFile(opt,FarmDirectory):
         worker.write('echo "python $CMSSW_BASE/src/PhysicsTools/NanoAODTools/scripts/nano_postproc.py \\\\"\n')
         worker.write('echo "$filename ${input}  \\\\"\n')
         worker.write('echo "--bi $CMSSW_BASE/src/BsTauTauAnalyzer/Flattener/scripts/keep_in.txt   \\\\"\n')
-	worker.write('echo "--bo $CMSSW_BASE/src/BsTauTauAnalyzer/Flattener/scripts/keep_out.txt  \\\\"\n')
-#        worker.write('echo "${filter} -I BsTauTauAnalyzer.Flattener.Flattener_analysis ${channel} "\n')
+        worker.write('echo "--bo $CMSSW_BASE/src/BsTauTauAnalyzer/Flattener/scripts/keep_out.txt  \\\\"\n')
         worker.write('echo "-I BsTauTauAnalyzer.Flattener.Flattener_analysis ${channel} "\n')
         worker.write('python $CMSSW_BASE/src/PhysicsTools/NanoAODTools/scripts/nano_postproc.py \\\n')
         worker.write('$filename ${input}  \\\n')
         worker.write('--bi $CMSSW_BASE/src/BsTauTauAnalyzer/Flattener/scripts/keep_in.txt   \\\n')
-	worker.write('--bo $CMSSW_BASE/src/BsTauTauAnalyzer/Flattener/scripts/keep_out.txt  \\\n')
-#        worker.write('${filter} -I BsTauTauAnalyzer.Flattener.Flattener_analysis ${channel} \n')
+        worker.write('--bo $CMSSW_BASE/src/BsTauTauAnalyzer/Flattener/scripts/keep_out.txt  \\\n')
         worker.write('-I BsTauTauAnalyzer.Flattener.Flattener_analysis ${channel} \n')
         worker.write('echo cp ${filename}/${filename}_Skim.root ${output}/${filename}_Skim.root\n')
         worker.write('cp ${filename}/${filename}_Skim.root ${output}/\n')
@@ -150,7 +151,7 @@ def main():
     usage = 'usage: %prog [options]'
     parser = optparse.OptionParser(usage)
     parser.add_option('-i', '--in',     dest='input',  help='list of input datasets',    default='listSamplesMC2018.txt', type='string')
-    parser.add_option('-o', '--out',      dest='output',   help='output directory',  default='/eos/cms/store/group/phys_bphys/ytakahas/bstautau/output', type='string') #EDIT THIS
+    parser.add_option('-o', '--out',      dest='output',   help='output directory',  default='/eos/user/p/paffleck/BsTauTauAnalyzer/Output', type='string') #EDIT THIS
     parser.add_option('-f', '--force',      dest='force',   help='force resubmission',  action='store_true')
     parser.add_option('-s', '--submit',   dest='submit',   help='submit jobs',       action='store_true')
     (opt, args) = parser.parse_args()
@@ -160,7 +161,7 @@ def main():
       sys.exit(1)
 	
     #prepare directory with scripts
-    FarmDirectory=os.environ['PWD']+'/FarmLocalNtuple'
+    FarmDirectory=os.environ['CMSSW_BASE']+'/src/BsTauTauAnalyzer/FarmLocalNtuple'
     if not os.path.exists(FarmDirectory):  os.system('mkdir -vp '+FarmDirectory)
     print('\nINFO: IMPORTANT MESSAGE: RUN THE FOLLOWING SEQUENCE:')
     print('voms-proxy-init --voms cms --valid 72:00 --out %s/myproxy509\n'%FarmDirectory)

@@ -33,7 +33,6 @@ ANALYSISTRIGGERDATA = {
 ANALYSISCHANNELCUT = {
     'e':'(nElectron>0)',
     'mu':'(nMuon>0)',
-#    'mu':'1',
     'emu':'(nMuon>0&&nElectron>0)',
     'ee':'nElectron>1',
     'mumu':'nMuon>1'

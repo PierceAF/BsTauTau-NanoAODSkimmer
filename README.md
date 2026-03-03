@@ -49,10 +49,13 @@ Edit runNtuplizer.py with (or add arguments to the command below):
 Edit EraConfig.py:
  * comment or uncomment the last lines depending on whether you are running on MC or data (different json and trigger conditions)
 
+```
+voms-proxy-init --voms cms --valid 72:00 --out $CMSSW_BASE/src/BsTauTauAnalyzer/FarmLocalNtuple/myproxy509
+```
+
 Choose the list of files you want to run over in the command below (see lists of data and MC samples in BsTauTauAnalyzer/Flattener/data/).
 
 ```
-voms-proxy-init --voms cms --valid 72:00 --out $CMSSW_BASE/src/FarmLocalNtuple/myproxy509
 python $CMSSW_BASE/src/BsTauTauAnalyzer/Flattener/scripts/runNtuplizer.py --in $CMSSW_BASE/src/BsTauTauAnalyzer/Flattener/data/NanoAODMC2018.txt
 ```
 

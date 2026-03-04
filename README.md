@@ -1,6 +1,7 @@
 # BsTauTau-NanoAODSkimmer
 
-Input files created by [NanoAOD producer](https://github.com/PierceAF/BsTauTau-Producer/tree/3-prong)
+Input files created by [NanoAOD producer](https://github.com/PierceAF/BsTauTau-Producer/tree/3-prong).
+Output files for use with [BsTauTau-TauRecon](https://github.com/PierceAF/BsTauTau-TauRecon)
 
 
 ## Setup
@@ -16,6 +17,23 @@ git cms-init
 git clone https://github.com/cms-nanoAOD/nanoAOD-tools.git PhysicsTools/NanoAODTools
 git clone https://github.com/PierceAF/BsTauTau-NanoAODSkimmer.git
 scram b -j 8
+```
+
+To add pileup weights, edit PhysicsTools/NanoAODTools/scripts/nano\_postproc.py. After l2, add:
+```
+from PhysicsTools.NanoAODTools.postprocessing.modules.common.puWeightProducer import *
+```
+
+After l76, add:
+```
+for mod, names in options.imports:
+        if "mc" in names or "sig" in names:
+      if "2018" in names:
+             modules.append(puAutoWeight_UL2018())
+          if "2017" in names:
+             modules.append(puAutoWeight_UL2017())
+          if "2016" in names:
+             modules.append(puAutoWeight_UL2016())
 ```
 
 ## Run locally
